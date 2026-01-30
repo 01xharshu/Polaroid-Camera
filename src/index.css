@@ -2,16 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Stable base styles to prevent horizontal scroll on mobile */
+/* Stable animations for the Polaroid mechanical effects */
+@layer utilities {
+  @keyframes eject {
+    0% { transform: translate(-50%, -65%); opacity: 0; }
+    2% { opacity: 1; }
+    100% { transform: translate(-50%, 85%); opacity: 1; }
+  }
+
+  @keyframes dockIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes develop {
+    0% { filter: brightness(0) contrast(0.5) sepia(1) grayscale(1) blur(12px); opacity: 0.3; }
+    100% { filter: brightness(1) contrast(1) sepia(0) grayscale(0) blur(0); opacity: 1; }
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.95) translateY(10px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  @keyframes flash {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .animate-eject { animation: eject 2.5s forwards cubic-bezier(0.3, 0.45, 0.35, 1); }
+  .animate-dockIn { animation: dockIn 0.3s ease-out forwards; }
+  .animate-develop { animation: develop 10s forwards linear; }
+  .animate-popIn { animation: popIn 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards; }
+  .animate-flash { animation: flash 0.15s ease-out forwards; }
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   background-color: #EBEBEB;
+  /* Allows natural vertical scrolling without horizontal jitter */
+  overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
 }
 
-/* Ensure images don't cause layout shifts */
 img {
   max-width: none;
+  -webkit-backface-visibility: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }

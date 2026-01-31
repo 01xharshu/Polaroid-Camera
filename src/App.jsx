@@ -180,8 +180,7 @@ const App = () => {
               className="absolute left-0 top-0 transition-all duration-500"
               style={{ 
                 transform: `rotate(${i * 6 - 3}deg) translate(${i * 6}px, ${i * -3}px)`,
-                zIndex: i,
-                opacity: 1 - (i * 0.15)
+                zIndex: i
               }}
             >
                 <PolaroidCard photo={p} size="stack" />
